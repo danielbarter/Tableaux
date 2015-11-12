@@ -1,14 +1,14 @@
-name:                simple
+name:                repsym
 version:             0.1.0.0
-synopsis:            Initial project template from stack
+synopsis:            representation theory of the symmetric group
 description:         Please see README.md
-homepage:            http://github.com/githubuser/simple#readme
+homepage:            https://github.com/danielbarter/repsym.git
 license:             BSD3
 license-file:        LICENSE
-author:              Author name here
-maintainer:          example@example.com
-copyright:           2010 Author Here
-category:            Web
+author:              Daniel Barter
+maintainer:          danielbarter@gmail.com
+copyright:           2015 Daniel Barter
+category:            Math
 build-type:          Simple
 -- extra-source-files:
 cabal-version:       >=1.10
@@ -38,4 +38,4 @@ test-suite simple-test
 
 source-repository head
   type:     git
-  location: https://github.com/githubuser/simple
+  location: https://github.com/danielbarter/repsym.git
