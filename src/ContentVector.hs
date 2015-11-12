@@ -42,3 +42,21 @@ isStandardTableaux t =    (isDecreasing $ length <$> t)
                        && (and $ isStrictlyIncreasing <$> t)
                        && (and $ isStrictlyIncreasing <$> (transpose t))
 
+
+-- safe maximum
+maximum' :: [Int] -> Int
+maximum' l = case l of [] -> 0
+                       l  -> maximum l
+
+-- when printing tableaux, you sometimes need to pad the strings
+pad :: [[String]] -> [[String]]
+pad t = (fmap . fmap) p t
+    where m = maximum' $ maximum' <$> (fmap . fmap) length t
+          p :: String -> String
+          p s = take m (s ++ (repeat ' '))
+
+
+printStandardTableaux :: StandardTableaux -> Doc
+printStandardTableaux t = vcat $ hsep <$> t'
+    where t' = (fmap . fmap) text $ pad $ (fmap . fmap) show t 
+
