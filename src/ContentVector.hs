@@ -2,6 +2,8 @@ module ContentVector where
 
 import Data.List (transpose)
 import Text.PrettyPrint
+import Control.Monad (join)
+import Data.List (sort)
 
 type ContentVector = [Int]
 
@@ -41,6 +43,7 @@ isStandardTableaux [] = True
 isStandardTableaux t =    (isDecreasing $ length <$> t)
                        && (and $ isStrictlyIncreasing <$> t)
                        && (and $ isStrictlyIncreasing <$> (transpose t))
+                       && sort (join t) == [1..(length $ join t)]                        
 
 
 -- safe maximum
