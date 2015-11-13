@@ -5,7 +5,9 @@ module ContentVector (ContentVector,
                       printStandardTableaux,
                       standardToContent,
                       contentToStandard,
-                      isDecreasing) where
+                      isDecreasing,
+                      transposePartition,
+                      transformTableaux) where
 
 import Data.List (transpose)
 import Text.PrettyPrint
@@ -90,3 +92,18 @@ contentToStandard c = foldl addDiagonal [] $ f <$> sortWith fst <$> (groupWith s
           addDiagonal m (x:xs,n)
               | n <= 0 = [x] : (  uncurry (++) <$> zip m ((fmap return xs) ++ (repeat []))  )
               | n > 0  = uncurry (++) <$> zip m ( (fmap return (x:xs)) ++ (repeat []) )
+
+--transposing partitions
+transposePartition :: [Int] -> [Int]
+transposePartition p = length <$> (transpose $ take' <$> p)
+    where take' n = take n (repeat ())
+
+--transforming tableaux
+transformTableaux :: Int -> StandardTableaux -> StandardTableaux 
+transformTableaux n t = if (b == a + 1) || (b == a - 1) then t else contentToStandard (as ++ [b,a] ++ bs)
+    where c = standardToContent t
+          (p,q) = splitAt n c
+          a = last p
+          as = init p
+          b = head q
+          bs = tail q
