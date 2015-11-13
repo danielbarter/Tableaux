@@ -4,7 +4,8 @@ module ContentVector (ContentVector,
                       isStandardTableaux,
                       printStandardTableaux,
                       standardToContent,
-                      contentToStandard) where
+                      contentToStandard,
+                      isDecreasing) where
 
 import Data.List (transpose)
 import Text.PrettyPrint
