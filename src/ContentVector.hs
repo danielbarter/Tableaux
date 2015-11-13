@@ -1,10 +1,16 @@
-module ContentVector where
+module ContentVector (ContentVector,
+                      isContentVector,
+                      StandardTableaux,
+                      isStandardTableaux,
+                      printStandardTableaux,
+                      standardToContent,
+                      contentToStandard) where
 
 import Data.List (transpose)
 import Text.PrettyPrint
 import Control.Monad (join)
 import Data.List (sort, sortBy)
-import GHC.Exts (sortWith)
+import GHC.Exts (sortWith, groupWith)
 
 type ContentVector = [Int]
 
@@ -74,5 +80,12 @@ contents = [ (subtract j) <$> [0..] | j <- [0..] ]
 standardToContent :: StandardTableaux -> ContentVector
 standardToContent t = snd <$> (sortWith fst $ join $ matrixZip t contents)
 
+-- there is probably a better way to convert content vectors to standard tableaux
 contentToStandard :: ContentVector -> StandardTableaux
-contentToStandard c = undefined
+contentToStandard c = foldl addDiagonal [] $ f <$> sortWith fst <$> (groupWith snd $ zip [1..] c)
+    where f :: [(a,Int)] -> ([a],Int)
+          f l = (fst <$> l, snd $ head l)
+          addDiagonal :: [[a]] -> ([a],Int) -> [[a]]
+          addDiagonal m (x:xs,n)
+              | n <= 0 = [x] : (  uncurry (++) <$> zip m ((fmap return xs) ++ (repeat []))  )
+              | n > 0  = uncurry (++) <$> zip m ( (fmap return (x:xs)) ++ (repeat []) )
