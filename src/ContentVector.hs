@@ -3,7 +3,8 @@ module ContentVector where
 import Data.List (transpose)
 import Text.PrettyPrint
 import Control.Monad (join)
-import Data.List (sort)
+import Data.List (sort, sortBy)
+import GHC.Exts (sortWith)
 
 type ContentVector = [Int]
 
@@ -63,3 +64,15 @@ printStandardTableaux :: StandardTableaux -> Doc
 printStandardTableaux t = vcat $ hsep <$> t'
     where t' = (fmap . fmap) text $ pad $ (fmap . fmap) show t 
 
+matrixZip :: [[a]] -> [[b]] -> [[(a,b)]]
+matrixZip x y = (uncurry zip) <$> zip x y
+
+contents :: [[Int]]
+contents = [ (subtract j) <$> [0..] | j <- [0..] ] 
+    where subtract j x = x - j
+
+standardToContent :: StandardTableaux -> ContentVector
+standardToContent t = snd <$> (sortWith fst $ join $ matrixZip t contents)
+
+contentToStandard :: ContentVector -> StandardTableaux
+contentToStandard c = undefined
