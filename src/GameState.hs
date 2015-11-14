@@ -1,4 +1,8 @@
-module GameState where
+module GameState (Game,
+                  GameState(..),
+                  initialState,
+                  transform,
+                  gameOver) where
 
 import ContentVector
 import Text.PrettyPrint (render)
