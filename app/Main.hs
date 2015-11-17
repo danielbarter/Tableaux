@@ -1,9 +1,11 @@
 module Main where
 
+import System.IO
 import ContentVector (isDecreasing)
 import GameState
 import Control.Monad.State.Lazy
 import Text.Read (readMaybe)
+
 
 parsePartition :: IO [Int]
 parsePartition = do putStr "choose a weakly decreasing sequence like [3,3,2,1] : "
@@ -21,8 +23,11 @@ parseTransformation = do putStr "transformation : "
                          case x of Just m  -> return m
                                    Nothing -> putStrLn "sorry, I didn't catch that" >> parseTransformation
 
+-- need to turn of line buffering for executable
 main :: IO ()
-main = do p <- parsePartition
+main = do hSetBuffering stdin NoBuffering 
+          hSetBuffering stdout NoBuffering
+          p <- parsePartition
           enterGame p
 
 enterGame :: [Int] -> IO ()
