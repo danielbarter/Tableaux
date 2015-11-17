@@ -1,8 +1,8 @@
-name:                repsym
+name:                Tableaux
 version:             0.1.0.0
-synopsis:            representation theory of the symmetric group
+synopsis:            game demonstrating representation theory of the symmetric group
 description:         Please see README.md
-homepage:            https://github.com/danielbarter/repsym.git
+homepage:            https://github.com/danielbarter/Tableaux.git
 license:             BSD3
 license-file:        LICENSE
 author:              Daniel Barter
@@ -17,6 +17,7 @@ library
   hs-source-dirs:      src
   exposed-modules:     ContentVector,
                        GameState
+                       Main
   build-depends:       base >= 4.7 && < 5,
                        pretty >= 1.0 && < 2.0,
                        mtl >= 2.0 && < 3.0,
@@ -32,4 +33,4 @@ executable simple-exe
 
 source-repository head
   type:     git
-  location: https://github.com/danielbarter/repsym.git
+  location: https://github.com/danielbarter/Tableaux.git
